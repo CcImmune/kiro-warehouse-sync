@@ -2,6 +2,9 @@
   const STATUS_GOOD = new Set(["connected", "active", "online", "complete", "completed"]);
   const STATUS_WARNING = new Set(["warning", "pending", "medium", "low"]);
   const STATUS_CRITICAL = new Set(["critical", "high priority", "missing"]);
+  const TOAST_LIFETIME_MS = 1800;
+  const TOAST_EXIT_MS = 280;
+  const toastTimers = new WeakMap();
 
   const route = () => window.location.pathname.replace(/^\/+/, "") || "home";
 
@@ -45,6 +48,48 @@
     });
   }
 
+  function isToastText(text) {
+    return /responding|drone dispatched|drone recalled|rescan initiated|scan initiated|return to dock|emergency stop|photo captured|moving forward|moving backward|turning left|turning right|ascending|descending|performing shelf scan|returning to voltair|hover-locked/i.test(text);
+  }
+
+  function isToastLike(node) {
+    if (!(node instanceof HTMLElement)) return false;
+    const text = normalizedText(node);
+    if (text.length < 8 || text.length > 260 || !isToastText(text)) return false;
+    const style = window.getComputedStyle(node);
+    const role = node.getAttribute("role");
+    const knownToast = node.matches("[data-sonner-toast], [data-radix-toast], [data-toast], [role='status'], [role='alert']");
+    const floating = style.position === "fixed" || style.position === "absolute";
+    return knownToast || floating;
+  }
+
+  function dismissToast(node, delay = TOAST_LIFETIME_MS) {
+    if (!(node instanceof HTMLElement)) return;
+    window.clearTimeout(toastTimers.get(node));
+    node.classList.add("kiro-toast-managed");
+    const timer = window.setTimeout(() => {
+      if (!node.isConnected) return;
+      node.classList.add("kiro-toast-exit");
+      window.setTimeout(() => {
+        if (node.isConnected) node.remove();
+      }, TOAST_EXIT_MS);
+    }, delay);
+    toastTimers.set(node, timer);
+  }
+
+  function manageToasts() {
+    const candidates = Array.from(
+      document.querySelectorAll("[data-sonner-toast], [data-radix-toast], [data-toast], [role='status'], [role='alert'], body > div")
+    ).filter(isToastLike);
+
+    if (candidates.length === 0) return;
+
+    candidates.forEach((node, index) => {
+      const isLatest = index === candidates.length - 1;
+      dismissToast(node, isLatest ? TOAST_LIFETIME_MS : 120);
+    });
+  }
+
   function enhance() {
     const root = document.getElementById("root");
     if (!root) return;
@@ -65,6 +110,7 @@
     });
 
     markActiveNavigation(root);
+    manageToasts();
   }
 
   let queued = false;

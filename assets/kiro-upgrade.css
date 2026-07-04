@@ -243,6 +243,21 @@ body.kiro-enhanced .kiro-nav-active::before {
   background: linear-gradient(90deg, transparent, var(--kiro-ember), var(--kiro-amber), transparent);
 }
 
+body.kiro-enhanced .kiro-toast-managed {
+  animation: kiro-toast-in 220ms ease both;
+  transition:
+    opacity 260ms ease,
+    transform 260ms ease,
+    filter 260ms ease;
+}
+
+body.kiro-enhanced .kiro-toast-managed.kiro-toast-exit {
+  opacity: 0 !important;
+  filter: blur(3px);
+  transform: translateY(-8px) scale(0.96) !important;
+  pointer-events: none !important;
+}
+
 @keyframes kiro-fade-up {
   from {
     opacity: 0;
@@ -295,6 +310,17 @@ body.kiro-enhanced .kiro-nav-active::before {
   50% {
     opacity: 1;
     transform: scaleX(1);
+  }
+}
+
+@keyframes kiro-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
