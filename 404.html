@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <link href="https://media.base44.com/images/public/6a45fe7a7f8bab1e148c0f43/bac987253_logo.png" rel="icon" type="image/svg+xml"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="./manifest.json" rel="manifest"/>
+  <title>
+   Kiro
+  </title>
+  <script>
+   (function () {
+    var base = "/kiro-warehouse-sync";
+    if (location.pathname === base || location.pathname.indexOf(base + "/") === 0) {
+     var path = location.pathname.slice(base.length) || "/";
+     history.replaceState(null, "", path + location.search + location.hash);
+    }
+   })();
+  </script>
+  <script crossorigin="" src="./assets/index-B4n5hROt.js" type="module">
+  </script>
+  <link crossorigin="" href="./assets/index-BZrU31vZ.css" rel="stylesheet"/>
+  <link href="./assets/kiro-upgrade.css" rel="stylesheet"/>
+  <script type="module">
+   if (window.self === window.top) {
+  let lastPath = "";
+  function getPageNameFromPath(path) {
+    const segments = path.split("/").filter(Boolean);
+    return segments[0] || null;
+  }
+  function trackPageView() {
+    const path = window.location.pathname;
+    if (path === lastPath) return;
+    lastPath = path;
+    const pageName = getPageNameFromPath(path) || "home";
+    const appId = "6a45fe7a7f8bab1e148c0f43";
+    if (!appId) return;
+    fetch(`/api/app-logs/${appId}/log-user-in-app/${pageName}`, {
+      method: "POST",
+    }).catch(() => {});
+  }
+  const originalPushState = history.pushState.bind(history);
+  history.pushState = function (...args) {
+    originalPushState(...args);
+    trackPageView();
+  };
+  const originalReplaceState = history.replaceState.bind(history);
+  history.replaceState = function (...args) {
+    originalReplaceState(...args);
+    trackPageView();
+  };
+  window.addEventListener("popstate", trackPageView);
+  trackPageView();
+}
+  </script>
+  <meta content="Kiro is the AURALIA ecosystem's operator interface, translating AI drone insights into precise, step-by-step warehouse instructions for faster inventory management and issue resolution." name="description"/>
+  <meta content="Kiro" property="og:title"/>
+  <meta content="Kiro is the AURALIA ecosystem's operator interface, translating AI drone insights into precise, step-by-step warehouse instructions for faster inventory management and issue resolution." property="og:description"/>
+  <meta content="https://media.base44.com/images/public/6a45fe7a7f8bab1e148c0f43/bac987253_logo.png/v1/fill/w_1200,h_630/bac987253_logo.png" property="og:image"/>
+  <meta content="https://kiro-warehouse-sync.base44.app" property="og:url"/>
+  <meta content="website" property="og:type"/>
+  <meta content="Kiro" property="og:site_name"/>
+  <meta content="Kiro" name="twitter:title"/>
+  <meta content="Kiro is the AURALIA ecosystem's operator interface, translating AI drone insights into precise, step-by-step warehouse instructions for faster inventory management and issue resolution." name="twitter:description"/>
+  <meta content="https://media.base44.com/images/public/6a45fe7a7f8bab1e148c0f43/bac987253_logo.png/v1/fill/w_1200,h_630/bac987253_logo.png" name="twitter:image"/>
+  <meta content="summary_large_image" name="twitter:card"/>
+  <meta content="https://kiro-warehouse-sync.base44.app" name="twitter:url"/>
+  <meta content="yes" name="mobile-web-app-capable"/>
+  <meta content="black" name="apple-mobile-web-app-status-bar-style"/>
+  <meta content="Kiro" name="apple-mobile-web-app-title"/>
+  <link href="https://kiro-warehouse-sync.base44.app" rel="canonical"/>
+  <script data-seo-source="builder" type="application/ld+json">
+   {"name": "Kiro", "@context": "https://schema.org", "@type": "WebSite", "url": "https://kiro-warehouse-sync.base44.app"}
+  </script>
+  <script data-seo-source="builder" type="application/ld+json">
+   {"name": "Kiro", "logo": "https://media.base44.com/images/public/6a45fe7a7f8bab1e148c0f43/bac987253_logo.png", "@context": "https://schema.org", "@type": "Organization", "url": "https://kiro-warehouse-sync.base44.app"}
+  </script>
+  <script async="true" data-app-id="6a45fe7a7f8bab1e148c0f43" data-platform-url="https://app.base44.com" src="./static/js/badge.js">
+  </script>
+  <script defer="true" src="./assets/kiro-upgrade.js">
+  </script>
+ </head>
+ <body>
+  <div id="root">
+   <div data-seo-source="builder" id="seo-snapshot" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
+    <main>
+     <header>
+      <h1>
+       Kiro
+      </h1>
+      <p>
+       Kiro is the AURALIA ecosystem's operator interface, translating AI drone insights into precise, step-by-step warehouse instructions for faster inventory management and issue resolution.
+      </p>
+     </header>
+     <nav aria-label="Pages">
+      <h2>
+       Pages
+      </h2>
+      <ul>
+       <li>
+        <a href="/ForgotPassword">
+         Forgot Password
+        </a>
+        — Forgot Password on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/report">
+         Report Issue
+        </a>
+        — Report Issue on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/TaskDetail">
+         Task Detail
+        </a>
+        — Task Detail on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/scanner">
+         Scanner Screen
+        </a>
+        — Scanner Screen on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/Register">
+         Register
+        </a>
+        — Register on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/notifications">
+         Notifications
+        </a>
+        — Notifications on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/drone-ops">
+         Drone Operations
+        </a>
+        — Drone Operations on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/tasks">
+         Tasks
+        </a>
+        — Tasks on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/drone-findings">
+         Drone Findings
+        </a>
+        — Drone Findings on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/ResetPassword">
+         Reset Password
+        </a>
+        — Reset Password on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/navigation">
+         Navigation Screen
+        </a>
+        — Navigation Screen on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/profile">
+         Profile
+        </a>
+        — Profile on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/performance">
+         Shift Performance
+        </a>
+        — Shift Performance on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/verification">
+         Inventory Verification
+        </a>
+        — Inventory Verification on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/login">
+         Login
+        </a>
+        — Login on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+       <li>
+        <a href="/drone-control">
+         Drone Control
+        </a>
+        — Drone Control on Kiro. Kiro is the AURALIA ecosystem's operator interface, translating AI drone insight.
+       </li>
+      </ul>
+     </nav>
+    </main>
+   </div>
+  </div>
+ </body>
+</html>
