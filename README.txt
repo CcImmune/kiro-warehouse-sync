@@ -8,6 +8,8 @@ Contents
 - 404.html: GitHub Pages fallback for client-side routes
 - manifest.json: simple web app manifest
 - assets/: bundled app JavaScript and CSS
+- assets/kiro-upgrade.css: premium AURALIA/Kiro color and animation layer
+- assets/kiro-upgrade.js: safe route/card/status enhancement script
 - static/js/badge.js: Base44 badge script copied from the deployed app
 
 Important Note
@@ -26,8 +28,10 @@ Then open:
 http://127.0.0.1:4177/
 
 Verification
-The packaged app was opened locally and the home screen plus client-side Tasks
-navigation rendered successfully.
+The packaged app was opened locally before the visual upgrade and the home screen
+plus client-side Tasks navigation rendered successfully. The upgrade layer is
+non-destructive: it adds color, motion, route transitions, card glow, status
+pulse, and hover behavior without changing app data or routes.
 
 GitHub Pages
 If publishing on GitHub Pages, use the repository root as the Pages source. The
