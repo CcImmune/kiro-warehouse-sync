@@ -5,6 +5,7 @@
   const TOAST_LIFETIME_MS = 1800;
   const TOAST_EXIT_MS = 280;
   const toastTimers = new WeakMap();
+  let toastSweepTimer = 0;
 
   const route = () => window.location.pathname.replace(/^\/+/, "") || "home";
 
@@ -57,10 +58,50 @@
     const text = normalizedText(node);
     if (text.length < 8 || text.length > 260 || !isToastText(text)) return false;
     const style = window.getComputedStyle(node);
-    const role = node.getAttribute("role");
-    const knownToast = node.matches("[data-sonner-toast], [data-radix-toast], [data-toast], [role='status'], [role='alert']");
+    const root = document.getElementById("root");
+    const knownToast = node.matches("[data-sonner-toast], [data-radix-toast], [data-radix-toast-root], [data-toast], [role='status'], [role='alert']");
+    const insideToastArea = node.closest("[data-sonner-toaster], [data-radix-toast-viewport], [aria-live]");
     const floating = style.position === "fixed" || style.position === "absolute";
-    return knownToast || floating;
+    const highLayer = Number.parseInt(style.zIndex || "0", 10) > 20;
+    const insideApp = root ? root.contains(node) : false;
+    return knownToast || insideToastArea || floating || highLayer || !insideApp;
+  }
+
+  function toastShell(node) {
+    if (!(node instanceof HTMLElement)) return node;
+
+    const direct = node.closest("[data-sonner-toast], [data-radix-toast-root], [data-radix-toast], [data-toast]");
+    if (direct instanceof HTMLElement) return direct;
+
+    const liveParent = node.closest("[data-sonner-toaster], [data-radix-toast-viewport], [aria-live]");
+    if (liveParent instanceof HTMLElement) {
+      const child = Array.from(liveParent.children).find((item) => item.contains(node));
+      if (child instanceof HTMLElement) return child;
+    }
+
+    const floatingStack = node.closest(".fixed");
+    if (floatingStack instanceof HTMLElement && floatingStack !== node) {
+      let shell = node;
+      while (shell.parentElement && shell.parentElement !== floatingStack) {
+        const parent = shell.parentElement;
+        const parentText = normalizedText(parent);
+        if (!isToastText(parentText) || parentText.length > 320) break;
+        shell = parent;
+      }
+      return shell;
+    }
+
+    let shell = node;
+    while (shell.parentElement && shell.parentElement !== document.body) {
+      const parent = shell.parentElement;
+      const parentText = normalizedText(parent);
+      if (!isToastText(parentText) || parentText.length > 320) break;
+      const parentStyle = window.getComputedStyle(parent);
+      const parentLooksFloating = parentStyle.position === "fixed" || parentStyle.position === "absolute";
+      if (!parentLooksFloating && !parent.closest("[aria-live], [data-sonner-toaster], [data-radix-toast-viewport]")) break;
+      shell = parent;
+    }
+    return shell;
   }
 
   function dismissToast(node, delay = TOAST_LIFETIME_MS) {
@@ -78,16 +119,32 @@
   }
 
   function manageToasts() {
+    if (!document.body) return;
     const candidates = Array.from(
-      document.querySelectorAll("[data-sonner-toast], [data-radix-toast], [data-toast], [role='status'], [role='alert'], body > div")
-    ).filter(isToastLike);
+      document.querySelectorAll("[data-sonner-toast], [data-radix-toast], [data-radix-toast-root], [data-toast], [role='status'], [role='alert'], [aria-live], [aria-live] *, [data-sonner-toaster] *, [data-radix-toast-viewport] *, body > div, body > div *, body > section, body > section *")
+    )
+      .filter(isToastLike)
+      .map(toastShell);
 
-    if (candidates.length === 0) return;
+    const unique = Array.from(new Set(candidates)).filter((node) => {
+      if (!(node instanceof HTMLElement)) return false;
+      return !candidates.some((other) => other !== node && other instanceof HTMLElement && node.contains(other) && isToastText(normalizedText(other)));
+    });
 
-    candidates.forEach((node, index) => {
-      const isLatest = index === candidates.length - 1;
+    if (unique.length === 0) return;
+
+    unique.forEach((node, index) => {
+      const isLatest = index === unique.length - 1;
       dismissToast(node, isLatest ? TOAST_LIFETIME_MS : 120);
     });
+  }
+
+  function sweepToasts() {
+    manageToasts();
+    window.clearTimeout(toastSweepTimer);
+    toastSweepTimer = window.setTimeout(manageToasts, 80);
+    window.setTimeout(manageToasts, 260);
+    window.setTimeout(manageToasts, 700);
   }
 
   function enhance() {
@@ -146,6 +203,8 @@
 
   window.addEventListener("popstate", routePulse);
   window.addEventListener("load", scheduleEnhance);
+  window.addEventListener("click", sweepToasts, true);
+  window.addEventListener("pointerdown", sweepToasts, true);
 
   new MutationObserver(scheduleEnhance).observe(document.documentElement, {
     childList: true,
