@@ -189,6 +189,24 @@ body.kiro-enhanced .kiro-transparent-logo-frame .kiro-transparent-logo {
   filter: drop-shadow(0 12px 26px rgba(251, 140, 0, 0.22));
 }
 
+body.kiro-enhanced .kiro-home-header {
+  align-items: flex-start !important;
+  padding-top: calc(4.3rem + env(safe-area-inset-top, 0px)) !important;
+  position: relative;
+}
+
+body.kiro-enhanced .kiro-home-actions {
+  gap: 0.55rem !important;
+  position: absolute !important;
+  right: 1rem;
+  top: calc(0.75rem + env(safe-area-inset-top, 0px));
+  z-index: 8;
+}
+
+body.kiro-enhanced .kiro-home-actions a {
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+}
+
 body.kiro-enhanced .kiro-status-good,
 body.kiro-enhanced .kiro-status-active {
   color: #b7ffd0 !important;

@@ -61,6 +61,23 @@
     });
   }
 
+  function markHomeHeaderActions(root) {
+    if (route() !== "home") return;
+
+    root.querySelectorAll("a[href='/performance'], a[href='/profile']").forEach((link) => {
+      if (!(link instanceof HTMLElement)) return;
+      const actions = link.parentElement;
+      const header = actions?.parentElement;
+      if (!(actions instanceof HTMLElement) || !(header instanceof HTMLElement)) return;
+      const headerText = normalizedText(header).toLowerCase();
+      if (!headerText.includes("good morning") && !headerText.includes("good afternoon") && !headerText.includes("good evening")) {
+        return;
+      }
+      header.classList.add("kiro-home-header");
+      actions.classList.add("kiro-home-actions");
+    });
+  }
+
   function markTransparentLogos(root) {
     root.querySelectorAll("img").forEach((image) => {
       if (!(image instanceof HTMLImageElement)) return;
@@ -292,6 +309,7 @@
 
     markActiveNavigation(root);
     markBottomNavigation(root);
+    markHomeHeaderActions(root);
     markTransparentLogos(root);
     manageToasts();
   }
