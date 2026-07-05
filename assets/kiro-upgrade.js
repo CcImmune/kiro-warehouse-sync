@@ -66,7 +66,7 @@
 
   function isToastLike(node) {
     if (!(node instanceof HTMLElement)) return false;
-    if (node.closest(".kiro-toast-exit")) return false;
+    if (node.closest(".kiro-toast-exit, .kiro-toast-suppressed")) return false;
     const text = normalizedText(node);
     if (text.length < 8 || text.length > 260 || !isToastText(text)) return false;
     const style = window.getComputedStyle(node);
@@ -118,6 +118,7 @@
 
   function dismissToast(node, delay = TOAST_LIFETIME_MS) {
     if (!(node instanceof HTMLElement)) return;
+    if (node.classList.contains("kiro-toast-managed") && !node.classList.contains("kiro-toast-suppressed")) return;
     window.clearTimeout(toastTimers.get(node));
     node.classList.add("kiro-toast-managed");
     node.classList.remove("kiro-toast-suppressed", "kiro-toast-exit");
