@@ -324,7 +324,26 @@ body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-stack {
   z-index: 120 !important;
 }
 
+body .kiro-native-toast-stack,
+#root div[class*="fixed"][class*="top-0"][class*="z-[100]"][class*="max-h-screen"][class*="flex-col"] {
+  left: 50% !important;
+  max-width: 32rem !important;
+  pointer-events: none !important;
+  right: auto !important;
+  top: calc(0.75rem + env(safe-area-inset-top, 0px)) !important;
+  transform: translateX(-50%) !important;
+  width: min(100vw, 32rem) !important;
+  z-index: 120 !important;
+}
+
 body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-hidden {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+body .kiro-native-toast-hidden,
+#root div[class*="fixed"][class*="top-0"][class*="z-[100]"][class*="max-h-screen"][class*="flex-col"] > :not(:first-child) {
   display: none !important;
   opacity: 0 !important;
   pointer-events: none !important;
@@ -346,6 +365,21 @@ body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro
   animation: kiro-native-toast-lifetime 2.6s ease forwards !important;
 }
 
+body .kiro-native-toast-card.kiro-native-toast-visible,
+#root div[class*="fixed"][class*="top-0"][class*="z-[100]"][class*="max-h-screen"][class*="flex-col"] > :first-child {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
+    rgba(10, 14, 22, 0.96) !important;
+  border: 1px solid rgba(255, 179, 0, 0.42) !important;
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.48), 0 0 28px rgba(251, 140, 0, 0.2) !important;
+  color: #f5f7fa !important;
+  max-width: calc(min(100vw, 32rem) - 1.5rem) !important;
+  pointer-events: none !important;
+  width: auto !important;
+  animation: kiro-native-toast-lifetime 2.6s ease forwards !important;
+}
+
 body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro-native-toast-visible [class*="font-semibold"] {
   color: var(--kiro-amber) !important;
   font-size: 0.86rem;
@@ -353,7 +387,22 @@ body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro
   line-height: 1.15;
 }
 
+body .kiro-native-toast-card.kiro-native-toast-visible [class*="font-semibold"],
+#root div[class*="fixed"][class*="top-0"][class*="z-[100]"][class*="max-h-screen"][class*="flex-col"] > :first-child [class*="font-semibold"] {
+  color: var(--kiro-amber) !important;
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
 body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro-native-toast-visible [class*="opacity-90"] {
+  color: #a8b0ba !important;
+  font-size: 0.76rem;
+  line-height: 1.28;
+}
+
+body .kiro-native-toast-card.kiro-native-toast-visible [class*="opacity-90"],
+#root div[class*="fixed"][class*="top-0"][class*="z-[100]"][class*="max-h-screen"][class*="flex-col"] > :first-child [class*="opacity-90"] {
   color: #a8b0ba !important;
   font-size: 0.76rem;
   line-height: 1.28;

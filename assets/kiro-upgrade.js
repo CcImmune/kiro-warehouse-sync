@@ -84,11 +84,19 @@
 
   function droneToastCards() {
     if (!document.body) return [];
-    const stacks = Array.from(document.body.children).filter((node) => {
+    const stacks = Array.from(document.querySelectorAll("body *")).filter((node) => {
       if (!(node instanceof HTMLElement)) return false;
       const style = window.getComputedStyle(node);
       const text = normalizedText(node);
-      return style.position === "fixed" && text.length < 1200 && isToastText(text);
+      const className = typeof node.className === "string" ? node.className : "";
+      const nativeToastViewport =
+        className.includes("fixed") &&
+        className.includes("top-0") &&
+        className.includes("z-[100]") &&
+        className.includes("max-h-screen") &&
+        className.includes("flex-col");
+      const childText = Array.from(node.children).some((child) => isToastText(normalizedText(child)));
+      return style.position === "fixed" && text.length < 1200 && (nativeToastViewport || isToastText(text) || childText);
     });
 
     return stacks.flatMap((stack) => {
@@ -96,7 +104,13 @@
       return Array.from(stack.children).filter((child) => {
         if (!(child instanceof HTMLElement)) return false;
         const text = normalizedText(child);
-        return text.length >= 8 && text.length < 320 && isToastText(text);
+        const childStyle = window.getComputedStyle(child);
+        const childClass = typeof child.className === "string" ? child.className : "";
+        const nestedViewport =
+          childStyle.position === "fixed" &&
+          childClass.includes("top-0") &&
+          childClass.includes("z-[100]");
+        return !nestedViewport && text.length >= 8 && text.length < 320 && isToastText(text);
       });
     });
   }
