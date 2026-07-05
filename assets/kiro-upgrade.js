@@ -4,6 +4,7 @@
   const STATUS_CRITICAL = new Set(["critical", "high priority", "missing"]);
   const TOAST_LIFETIME_MS = 1800;
   const TOAST_EXIT_MS = 280;
+  const LOGO_SRC = "/assets/auralia-logo-transparent.png";
   const toastTimers = new WeakMap();
   let toastSweepTimer = 0;
 
@@ -57,6 +58,28 @@
       const fixedBottom = className.includes("fixed") && className.includes("bottom-0");
       const knownMobileNav = ["home", "tasks", "drone", "scan", "alerts"].every((label) => labels.includes(label));
       nav.classList.toggle("kiro-bottom-nav", fixedBottom || knownMobileNav);
+    });
+  }
+
+  function markTransparentLogos(root) {
+    root.querySelectorAll("img").forEach((image) => {
+      if (!(image instanceof HTMLImageElement)) return;
+      const source = image.currentSrc || image.src || image.getAttribute("src") || "";
+      const isAuraliaLogo =
+        source.includes("auralia-logo-transparent") ||
+        source.includes("301342d79_png") ||
+        source.includes("bac987253_logo") ||
+        image.alt.toLowerCase().includes("auralia") ||
+        image.alt.toLowerCase().includes("kiro");
+      if (!isAuraliaLogo) return;
+
+      if (!source.includes("auralia-logo-transparent")) {
+        image.src = LOGO_SRC;
+      }
+      image.classList.add("kiro-transparent-logo");
+      if (image.parentElement instanceof HTMLElement) {
+        image.parentElement.classList.add("kiro-transparent-logo-frame");
+      }
     });
   }
 
@@ -269,6 +292,7 @@
 
     markActiveNavigation(root);
     markBottomNavigation(root);
+    markTransparentLogos(root);
     manageToasts();
   }
 
