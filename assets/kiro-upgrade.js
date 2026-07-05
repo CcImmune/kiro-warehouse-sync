@@ -6,6 +6,9 @@
   const TOAST_EXIT_MS = 280;
   const toastTimers = new WeakMap();
   let toastSweepTimer = 0;
+  let actionToastTimer = 0;
+  let lastActionToastKey = "";
+  let lastActionToastAt = 0;
 
   const route = () => window.location.pathname.replace(/^\/+/, "") || "home";
 
@@ -62,6 +65,84 @@
 
   function isToastText(text) {
     return /responding|drone dispatched|drone recalled|rescan initiated|scan initiated|return to dock|emergency stop|photo captured|moving forward|moving backward|turning left|turning right|ascending|descending|performing shelf scan|returning to voltair|hover-locked/i.test(text);
+  }
+
+  function currentDroneName() {
+    const liveText = Array.from(document.querySelectorAll("span, p, div"))
+      .map(normalizedText)
+      .find((text) => /Auralia A-\d{2}\s*·\s*LIVE/i.test(text));
+    const liveMatch = liveText && liveText.match(/Auralia A-\d{2}/i);
+    if (liveMatch) return liveMatch[0];
+
+    const bodyMatch = normalizedText(document.body).match(/Auralia A-\d{2}/i);
+    return bodyMatch ? bodyMatch[0] : "Auralia drone";
+  }
+
+  function droneActionMessage(button) {
+    if (!(button instanceof HTMLElement) || route() !== "drone-control") return null;
+    if (button.closest("nav")) return null;
+
+    const text = normalizedText(button).toLowerCase();
+    const droneName = currentDroneName();
+
+    if (/^auralia a-\d{2}$/i.test(text)) return null;
+    if (text.includes("return to dock")) {
+      return { title: "Return to dock", description: `${droneName} returning to Voltair Dock.` };
+    }
+    if (text.includes("emergency stop")) {
+      return { title: "Emergency stop", description: `${droneName} hover-locked.`, danger: true };
+    }
+
+    const buttons = Array.from(document.querySelectorAll("button"));
+    const index = buttons.indexOf(button);
+    const indexedMessages = {
+      5: { title: "Ascending", description: `${droneName} responding.` },
+      6: { title: "Descending", description: `${droneName} responding.` },
+      7: { title: "Moving forward", description: `${droneName} responding.` },
+      8: { title: "Turning left", description: `${droneName} responding.` },
+      9: { title: "Turning right", description: `${droneName} responding.` },
+      10: { title: "Moving backward", description: `${droneName} responding.` },
+      11: { title: "Scan initiated", description: `${droneName} performing shelf scan.` },
+      13: { title: "Photo captured", description: `Saved from ${droneName}.` },
+    };
+
+    return indexedMessages[index] || null;
+  }
+
+  function showActionToast(message) {
+    if (!message) return;
+    const now = Date.now();
+    const key = `${message.title}|${message.description}`;
+    if (key === lastActionToastKey && now - lastActionToastAt < 180) return;
+    lastActionToastKey = key;
+    lastActionToastAt = now;
+
+    let toast = document.getElementById("kiro-action-toast");
+    if (!toast) {
+      toast = document.createElement("div");
+      toast.id = "kiro-action-toast";
+      toast.setAttribute("role", "status");
+      toast.setAttribute("aria-live", "polite");
+
+      const title = document.createElement("div");
+      title.className = "kiro-action-toast-title";
+      const description = document.createElement("div");
+      description.className = "kiro-action-toast-description";
+      toast.append(title, description);
+      document.body.appendChild(toast);
+    }
+
+    toast.querySelector(".kiro-action-toast-title").textContent = message.title;
+    toast.querySelector(".kiro-action-toast-description").textContent = message.description;
+    toast.classList.toggle("kiro-action-toast-danger", Boolean(message.danger));
+    toast.classList.remove("kiro-action-toast-hidden");
+    toast.classList.add("kiro-action-toast-visible");
+
+    window.clearTimeout(actionToastTimer);
+    actionToastTimer = window.setTimeout(() => {
+      toast.classList.remove("kiro-action-toast-visible");
+      toast.classList.add("kiro-action-toast-hidden");
+    }, TOAST_LIFETIME_MS);
   }
 
   function isToastLike(node) {
@@ -150,6 +231,15 @@
 
     if (unique.length === 0) return;
 
+    if (route() === "drone-control") {
+      unique.forEach((node) => {
+        if (node instanceof HTMLElement && node.id !== "kiro-action-toast") {
+          node.classList.add("kiro-native-toast-hidden");
+        }
+      });
+      return;
+    }
+
     unique.forEach((node, index) => {
       const isLatest = index === unique.length - 1;
       if (isLatest) {
@@ -166,6 +256,15 @@
     toastSweepTimer = window.setTimeout(manageToasts, 80);
     window.setTimeout(manageToasts, 260);
     window.setTimeout(manageToasts, 700);
+  }
+
+  function handleDroneAction(event) {
+    const button = event.target instanceof Element ? event.target.closest("button") : null;
+    const message = droneActionMessage(button);
+    if (!message) return;
+    showActionToast(message);
+    window.setTimeout(sweepToasts, 20);
+    window.setTimeout(sweepToasts, 160);
   }
 
   function enhance() {
@@ -225,6 +324,7 @@
 
   window.addEventListener("popstate", routePulse);
   window.addEventListener("load", scheduleEnhance);
+  window.addEventListener("pointerdown", handleDroneAction, true);
   window.addEventListener("click", sweepToasts, true);
   window.addEventListener("pointerdown", sweepToasts, true);
 

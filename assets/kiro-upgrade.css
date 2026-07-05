@@ -299,6 +299,12 @@ body.kiro-enhanced .kiro-toast-managed {
     filter 260ms ease;
 }
 
+body.kiro-enhanced .kiro-native-toast-hidden {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 body.kiro-enhanced .kiro-toast-suppressed {
   opacity: 0 !important;
   transform: translateY(-8px) scale(0.96) !important;
@@ -311,6 +317,64 @@ body.kiro-enhanced .kiro-toast-managed.kiro-toast-exit {
   filter: blur(3px);
   transform: translateY(-8px) scale(0.96) !important;
   pointer-events: none !important;
+}
+
+#kiro-action-toast {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
+    rgba(10, 14, 22, 0.95);
+  border: 1px solid rgba(255, 179, 0, 0.38);
+  border-radius: 14px;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.48), 0 0 28px rgba(251, 140, 0, 0.2);
+  color: #f5f7fa;
+  left: 50%;
+  max-width: calc(min(100vw, 32rem) - 1.5rem);
+  opacity: 0;
+  padding: 0.85rem 1rem;
+  pointer-events: none;
+  position: fixed;
+  top: calc(0.8rem + env(safe-area-inset-top, 0px));
+  transform: translate(-50%, -0.6rem) scale(0.98);
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease,
+    filter 180ms ease;
+  width: max-content;
+  z-index: 120;
+}
+
+#kiro-action-toast.kiro-action-toast-visible {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+
+#kiro-action-toast.kiro-action-toast-hidden {
+  opacity: 0;
+  filter: blur(2px);
+  transform: translate(-50%, -0.6rem) scale(0.98);
+}
+
+#kiro-action-toast.kiro-action-toast-danger {
+  border-color: rgba(211, 47, 47, 0.55);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5), 0 0 28px rgba(211, 47, 47, 0.24);
+}
+
+#kiro-action-toast .kiro-action-toast-title {
+  color: var(--kiro-amber);
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.15;
+}
+
+#kiro-action-toast.kiro-action-toast-danger .kiro-action-toast-title {
+  color: #ff9a9a;
+}
+
+#kiro-action-toast .kiro-action-toast-description {
+  color: #a8b0ba;
+  font-size: 0.76rem;
+  line-height: 1.28;
+  margin-top: 0.22rem;
 }
 
 @keyframes kiro-fade-up {
