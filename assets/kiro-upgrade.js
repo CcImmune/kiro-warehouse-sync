@@ -66,6 +66,7 @@
 
   function isToastLike(node) {
     if (!(node instanceof HTMLElement)) return false;
+    if (node.closest(".kiro-toast-exit")) return false;
     const text = normalizedText(node);
     if (text.length < 8 || text.length > 260 || !isToastText(text)) return false;
     const style = window.getComputedStyle(node);
@@ -119,14 +120,18 @@
     if (!(node instanceof HTMLElement)) return;
     window.clearTimeout(toastTimers.get(node));
     node.classList.add("kiro-toast-managed");
+    node.classList.remove("kiro-toast-suppressed", "kiro-toast-exit");
     const timer = window.setTimeout(() => {
       if (!node.isConnected) return;
       node.classList.add("kiro-toast-exit");
-      window.setTimeout(() => {
-        if (node.isConnected) node.remove();
-      }, TOAST_EXIT_MS);
     }, delay);
     toastTimers.set(node, timer);
+  }
+
+  function suppressToast(node) {
+    if (!(node instanceof HTMLElement)) return;
+    window.clearTimeout(toastTimers.get(node));
+    node.classList.add("kiro-toast-managed", "kiro-toast-suppressed");
   }
 
   function manageToasts() {
@@ -146,7 +151,11 @@
 
     unique.forEach((node, index) => {
       const isLatest = index === unique.length - 1;
-      dismissToast(node, isLatest ? TOAST_LIFETIME_MS : 120);
+      if (isLatest) {
+        dismissToast(node, TOAST_LIFETIME_MS);
+      } else {
+        suppressToast(node);
+      }
     });
   }
 
