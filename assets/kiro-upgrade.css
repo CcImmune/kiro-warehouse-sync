@@ -313,7 +313,7 @@ body.kiro-enhanced .kiro-toast-managed.kiro-toast-exit {
   pointer-events: none !important;
 }
 
-body.kiro-enhanced[data-kiro-route="drone-control"] > div[class*="fixed"][class*="top-0"][class*="z-[100]"] {
+body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-stack {
   left: 50% !important;
   max-width: 32rem !important;
   pointer-events: none !important;
@@ -324,11 +324,13 @@ body.kiro-enhanced[data-kiro-route="drone-control"] > div[class*="fixed"][class*
   z-index: 120 !important;
 }
 
-body.kiro-enhanced[data-kiro-route="drone-control"] > div[class*="fixed"][class*="top-0"][class*="z-[100]"] > *:not(:first-child) {
+body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-hidden {
   display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
-body.kiro-enhanced[data-kiro-route="drone-control"] > div[class*="fixed"][class*="top-0"][class*="z-[100]"] > *:first-child {
+body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro-native-toast-visible {
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
     rgba(10, 14, 22, 0.96) !important;
@@ -344,14 +346,14 @@ body.kiro-enhanced[data-kiro-route="drone-control"] > div[class*="fixed"][class*
   animation: kiro-native-toast-lifetime 2.6s ease forwards !important;
 }
 
-body.kiro-enhanced[data-kiro-route="drone-control"] > div[class*="fixed"][class*="top-0"][class*="z-[100]"] > *:first-child [class*="font-semibold"] {
+body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro-native-toast-visible [class*="font-semibold"] {
   color: var(--kiro-amber) !important;
   font-size: 0.86rem;
   font-weight: 800;
   line-height: 1.15;
 }
 
-body.kiro-enhanced[data-kiro-route="drone-control"] > div[class*="fixed"][class*="top-0"][class*="z-[100]"] > *:first-child [class*="opacity-90"] {
+body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro-native-toast-visible [class*="opacity-90"] {
   color: #a8b0ba !important;
   font-size: 0.76rem;
   line-height: 1.28;

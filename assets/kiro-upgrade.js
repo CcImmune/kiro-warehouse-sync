@@ -75,11 +75,44 @@
   }
 
   function restartNativeDroneToast() {
-    const latest = document.querySelector('body > div[class*="fixed"][class*="top-0"][class*="z-[100]"] > *:first-child');
+    const latest = manageDroneNativeToasts();
     if (!(latest instanceof HTMLElement)) return;
     latest.style.animation = "none";
     latest.getBoundingClientRect();
     latest.style.animation = "";
+  }
+
+  function droneToastCards() {
+    if (!document.body) return [];
+    const stacks = Array.from(document.body.children).filter((node) => {
+      if (!(node instanceof HTMLElement)) return false;
+      const style = window.getComputedStyle(node);
+      const text = normalizedText(node);
+      return style.position === "fixed" && text.length < 1200 && isToastText(text);
+    });
+
+    return stacks.flatMap((stack) => {
+      stack.classList.add("kiro-native-toast-stack");
+      return Array.from(stack.children).filter((child) => {
+        if (!(child instanceof HTMLElement)) return false;
+        const text = normalizedText(child);
+        return text.length >= 8 && text.length < 320 && isToastText(text);
+      });
+    });
+  }
+
+  function manageDroneNativeToasts() {
+    const cards = droneToastCards();
+    if (cards.length === 0) return null;
+
+    const latest = cards[0];
+    cards.forEach((card, index) => {
+      card.classList.add("kiro-native-toast-card");
+      card.classList.toggle("kiro-native-toast-visible", index === 0);
+      card.classList.toggle("kiro-native-toast-hidden", index !== 0);
+    });
+
+    return latest;
   }
 
   function isToastLike(node) {
@@ -168,7 +201,10 @@
 
     if (unique.length === 0) return;
 
-    if (route() === "drone-control") return;
+    if (route() === "drone-control") {
+      manageDroneNativeToasts();
+      return;
+    }
 
     unique.forEach((node, index) => {
       const isLatest = index === unique.length - 1;
@@ -191,8 +227,10 @@
   function handleDroneActionToast(event) {
     const button = event.target instanceof Element ? event.target.closest("button") : null;
     if (!isDroneActionButton(button)) return;
+    window.setTimeout(manageDroneNativeToasts, 20);
     window.setTimeout(restartNativeDroneToast, 90);
     window.setTimeout(restartNativeDroneToast, 240);
+    window.setTimeout(manageDroneNativeToasts, 700);
   }
 
   function enhance() {
