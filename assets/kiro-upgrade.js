@@ -49,6 +49,17 @@
     });
   }
 
+  function markBottomNavigation(root) {
+    root.querySelectorAll("nav").forEach((nav) => {
+      if (!(nav instanceof HTMLElement)) return;
+      const labels = normalizedText(nav).toLowerCase();
+      const className = typeof nav.className === "string" ? nav.className : "";
+      const fixedBottom = className.includes("fixed") && className.includes("bottom-0");
+      const knownMobileNav = ["home", "tasks", "drone", "scan", "alerts"].every((label) => labels.includes(label));
+      nav.classList.toggle("kiro-bottom-nav", fixedBottom || knownMobileNav);
+    });
+  }
+
   function isToastText(text) {
     return /responding|drone dispatched|drone recalled|rescan initiated|scan initiated|return to dock|emergency stop|photo captured|moving forward|moving backward|turning left|turning right|ascending|descending|performing shelf scan|returning to voltair|hover-locked/i.test(text);
   }
@@ -167,6 +178,7 @@
     });
 
     markActiveNavigation(root);
+    markBottomNavigation(root);
     manageToasts();
   }
 
