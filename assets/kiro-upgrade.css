@@ -362,7 +362,7 @@ body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro
   pointer-events: none !important;
   transform: translateY(-0.6rem) scale(0.98);
   width: auto !important;
-  animation: kiro-native-toast-lifetime 2.6s ease forwards !important;
+  animation: kiro-native-toast-lifetime 2.9s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
 }
 
 body .kiro-native-toast-card.kiro-native-toast-visible,
@@ -377,7 +377,7 @@ body .kiro-native-toast-card.kiro-native-toast-visible,
   max-width: calc(min(100vw, 32rem) - 1.5rem) !important;
   pointer-events: none !important;
   width: auto !important;
-  animation: kiro-native-toast-lifetime 2.6s ease forwards !important;
+  animation: kiro-native-toast-lifetime 2.9s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
 }
 
 body.kiro-enhanced[data-kiro-route="drone-control"] .kiro-native-toast-card.kiro-native-toast-visible [class*="font-semibold"] {
@@ -422,16 +422,23 @@ body .kiro-native-toast-card.kiro-native-toast-visible [class*="opacity-90"],
 @keyframes kiro-native-toast-lifetime {
   0% {
     opacity: 0;
-    transform: translateY(-0.6rem) scale(0.98);
+    filter: blur(2px);
+    transform: translateY(-0.6rem) scale(0.985);
   }
-  9%, 74% {
+  10%, 68% {
     opacity: 1;
+    filter: blur(0);
     transform: translateY(0) scale(1);
+  }
+  86% {
+    opacity: 0.48;
+    filter: blur(0.5px);
+    transform: translateY(-0.18rem) scale(0.995);
   }
   100% {
     opacity: 0;
-    filter: blur(2px);
-    transform: translateY(-0.5rem) scale(0.98);
+    filter: blur(1.4px);
+    transform: translateY(-0.38rem) scale(0.99);
   }
 }
 
