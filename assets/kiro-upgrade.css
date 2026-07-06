@@ -235,6 +235,33 @@ body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
   width: clamp(2.85rem, 12vw, 3.35rem) !important;
 }
 
+body.kiro-enhanced[data-kiro-route="home"] .kiro-route-frame {
+  max-width: none !important;
+  width: 100vw !important;
+}
+
+body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header,
+body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid,
+body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid + div,
+body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid + div + div,
+body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid + div + div + div,
+body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid + div + div + div + div {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: min(100vw, 72rem);
+  width: 100%;
+}
+
+body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+body.kiro-enhanced[data-kiro-route="home"] .kiro-bottom-nav,
+body.kiro-enhanced[data-kiro-route="home"] nav.fixed.bottom-0 {
+  max-width: none !important;
+  width: 100vw !important;
+}
+
 @media (max-width: 430px) {
   body.kiro-enhanced .kiro-home-header {
     display: block !important;
@@ -274,6 +301,18 @@ body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
     height: 2.25rem !important;
     width: 2.25rem !important;
   }
+
+  body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid {
+    gap: 0.75rem !important;
+    grid-template-columns: 1fr !important;
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+  }
+
+  body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid .kiro-card {
+    min-height: 6.2rem;
+    width: 100%;
+  }
 }
 
 @media (max-width: 340px) {
@@ -285,6 +324,12 @@ body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
     flex-basis: 2.65rem !important;
     height: 2.65rem !important;
     width: 2.65rem !important;
+  }
+}
+
+@media (min-width: 960px) {
+  body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
   }
 }
 
