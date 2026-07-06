@@ -235,6 +235,12 @@ body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
   width: clamp(2.85rem, 12vw, 3.35rem) !important;
 }
 
+body.kiro-enhanced .kiro-home-header .kiro-transparent-logo {
+  flex: 0 0 clamp(3.15rem, 13vw, 3.75rem) !important;
+  height: clamp(3.15rem, 13vw, 3.75rem) !important;
+  width: clamp(3.15rem, 13vw, 3.75rem) !important;
+}
+
 body.kiro-enhanced[data-kiro-route="home"] .kiro-route-frame {
   max-width: 32rem !important;
   width: min(100vw, 32rem) !important;
@@ -277,6 +283,12 @@ body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid {
   }
 
   body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
+    flex-basis: 3.75rem !important;
+    height: 3.75rem !important;
+    width: 3.75rem !important;
+  }
+
+  body.kiro-enhanced .kiro-home-header .kiro-transparent-logo {
     flex-basis: 3.75rem !important;
     height: 3.75rem !important;
     width: 3.75rem !important;
@@ -329,6 +341,12 @@ body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid {
   }
 
   body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
+    flex-basis: 3.25rem !important;
+    height: 3.25rem !important;
+    width: 3.25rem !important;
+  }
+
+  body.kiro-enhanced .kiro-home-header .kiro-transparent-logo {
     flex-basis: 3.25rem !important;
     height: 3.25rem !important;
     width: 3.25rem !important;

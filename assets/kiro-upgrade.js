@@ -95,7 +95,10 @@
       }
       image.classList.add("kiro-transparent-logo");
       if (image.parentElement instanceof HTMLElement) {
-        image.parentElement.classList.add("kiro-transparent-logo-frame");
+        const parentHasOnlyLogo =
+          image.parentElement.children.length === 1 &&
+          normalizedText(image.parentElement).length === 0;
+        image.parentElement.classList.toggle("kiro-transparent-logo-frame", parentHasOnlyLogo);
       }
     });
   }
