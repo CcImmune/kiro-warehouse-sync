@@ -196,16 +196,25 @@ body.kiro-enhanced .kiro-home-header {
 }
 
 body.kiro-enhanced .kiro-home-header > :first-child {
-  min-width: 0;
+  align-items: center !important;
+  display: flex !important;
+  flex: 1 1 auto !important;
   max-width: 100%;
+  min-width: 0;
+  width: 100%;
 }
 
 body.kiro-enhanced .kiro-home-header > :first-child > :last-child {
+  flex: 1 1 auto;
   min-width: 0;
+  width: auto;
 }
 
 body.kiro-enhanced .kiro-home-header h1 {
-  overflow-wrap: anywhere;
+  max-width: 100%;
+  overflow-wrap: normal;
+  white-space: normal;
+  word-break: normal;
 }
 
 body.kiro-enhanced .kiro-home-actions {
@@ -221,25 +230,35 @@ body.kiro-enhanced .kiro-home-actions a {
 }
 
 body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
-  flex: 0 0 clamp(2.35rem, 10vw, 3rem) !important;
-  height: clamp(2.35rem, 10vw, 3rem) !important;
-  width: clamp(2.35rem, 10vw, 3rem) !important;
+  flex: 0 0 clamp(2.85rem, 12vw, 3.35rem) !important;
+  height: clamp(2.85rem, 12vw, 3.35rem) !important;
+  width: clamp(2.85rem, 12vw, 3.35rem) !important;
 }
 
-@media (max-width: 380px) {
+@media (max-width: 430px) {
   body.kiro-enhanced .kiro-home-header {
+    display: block !important;
     padding-left: 1rem !important;
     padding-right: 1rem !important;
-    padding-top: calc(3.9rem + env(safe-area-inset-top, 0px)) !important;
+    padding-top: calc(3.75rem + env(safe-area-inset-top, 0px)) !important;
   }
 
   body.kiro-enhanced .kiro-home-header > :first-child {
-    gap: 0.65rem !important;
+    gap: 0.7rem !important;
+    padding-right: 0 !important;
+  }
+
+  body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
+    flex-basis: 3rem !important;
+    height: 3rem !important;
+    width: 3rem !important;
   }
 
   body.kiro-enhanced .kiro-home-header h1 {
-    font-size: 1.05rem !important;
-    line-height: 1.2 !important;
+    font-size: clamp(1rem, 4.8vw, 1.18rem) !important;
+    line-height: 1.15 !important;
+    max-width: calc(100vw - 6rem);
+    white-space: nowrap;
   }
 
   body.kiro-enhanced .kiro-home-header p {
@@ -254,6 +273,18 @@ body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
   body.kiro-enhanced .kiro-home-actions a {
     height: 2.25rem !important;
     width: 2.25rem !important;
+  }
+}
+
+@media (max-width: 340px) {
+  body.kiro-enhanced .kiro-home-header h1 {
+    font-size: 0.95rem !important;
+  }
+
+  body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
+    flex-basis: 2.65rem !important;
+    height: 2.65rem !important;
+    width: 2.65rem !important;
   }
 }
 
