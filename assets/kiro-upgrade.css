@@ -236,8 +236,8 @@ body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
 }
 
 body.kiro-enhanced[data-kiro-route="home"] .kiro-route-frame {
-  max-width: none !important;
-  width: 100vw !important;
+  max-width: 32rem !important;
+  width: min(100vw, 32rem) !important;
 }
 
 body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header,
@@ -248,48 +248,56 @@ body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid + div + div
 body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid + div + div + div + div {
   margin-left: auto;
   margin-right: auto;
-  max-width: min(100vw, 72rem);
+  max-width: 32rem;
   width: 100%;
 }
 
 body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-}
-
-body.kiro-enhanced[data-kiro-route="home"] .kiro-bottom-nav,
-body.kiro-enhanced[data-kiro-route="home"] nav.fixed.bottom-0 {
-  max-width: none !important;
-  width: 100vw !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 }
 
 @media (max-width: 430px) {
   body.kiro-enhanced .kiro-home-header {
-    display: block !important;
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    padding-top: calc(3.75rem + env(safe-area-inset-top, 0px)) !important;
+    padding-left: 1.05rem !important;
+    padding-right: 1.05rem !important;
+    padding-top: calc(4.15rem + env(safe-area-inset-top, 0px)) !important;
   }
 
   body.kiro-enhanced .kiro-home-header > :first-child {
-    gap: 0.7rem !important;
+    align-items: center !important;
+    display: grid !important;
+    gap: 0.85rem !important;
+    grid-template-columns: 3.75rem minmax(0, 1fr);
     padding-right: 0 !important;
   }
 
+  body.kiro-enhanced .kiro-home-header > :first-child > :last-child {
+    max-width: 100%;
+    min-width: 0;
+  }
+
   body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
-    flex-basis: 3rem !important;
-    height: 3rem !important;
-    width: 3rem !important;
+    flex-basis: 3.75rem !important;
+    height: 3.75rem !important;
+    width: 3.75rem !important;
   }
 
   body.kiro-enhanced .kiro-home-header h1 {
-    font-size: clamp(1rem, 4.8vw, 1.18rem) !important;
+    font-size: clamp(1.15rem, 5.4vw, 1.5rem) !important;
     line-height: 1.15 !important;
-    max-width: calc(100vw - 6rem);
+    max-width: 100%;
     white-space: nowrap;
   }
 
   body.kiro-enhanced .kiro-home-header p {
     line-height: 1.25 !important;
+    max-width: 100% !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
+  }
+
+  body.kiro-enhanced .kiro-home-header p:first-child {
+    white-space: normal !important;
   }
 
   body.kiro-enhanced .kiro-home-actions {
@@ -304,13 +312,13 @@ body.kiro-enhanced[data-kiro-route="home"] nav.fixed.bottom-0 {
 
   body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid {
     gap: 0.75rem !important;
-    grid-template-columns: 1fr !important;
-    padding-left: 0.85rem !important;
-    padding-right: 0.85rem !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
   body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid .kiro-card {
-    min-height: 6.2rem;
+    min-height: 7.25rem;
     width: 100%;
   }
 }
@@ -321,15 +329,9 @@ body.kiro-enhanced[data-kiro-route="home"] nav.fixed.bottom-0 {
   }
 
   body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
-    flex-basis: 2.65rem !important;
-    height: 2.65rem !important;
-    width: 2.65rem !important;
-  }
-}
-
-@media (min-width: 960px) {
-  body.kiro-enhanced[data-kiro-route="home"] .kiro-home-header + .grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    flex-basis: 3.25rem !important;
+    height: 3.25rem !important;
+    width: 3.25rem !important;
   }
 }
 
