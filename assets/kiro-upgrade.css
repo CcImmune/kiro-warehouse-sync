@@ -195,6 +195,19 @@ body.kiro-enhanced .kiro-home-header {
   position: relative;
 }
 
+body.kiro-enhanced .kiro-home-header > :first-child {
+  min-width: 0;
+  max-width: 100%;
+}
+
+body.kiro-enhanced .kiro-home-header > :first-child > :last-child {
+  min-width: 0;
+}
+
+body.kiro-enhanced .kiro-home-header h1 {
+  overflow-wrap: anywhere;
+}
+
 body.kiro-enhanced .kiro-home-actions {
   gap: 0.55rem !important;
   position: absolute !important;
@@ -205,6 +218,43 @@ body.kiro-enhanced .kiro-home-actions {
 
 body.kiro-enhanced .kiro-home-actions a {
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+}
+
+body.kiro-enhanced .kiro-home-header .kiro-transparent-logo-frame {
+  flex: 0 0 clamp(2.35rem, 10vw, 3rem) !important;
+  height: clamp(2.35rem, 10vw, 3rem) !important;
+  width: clamp(2.35rem, 10vw, 3rem) !important;
+}
+
+@media (max-width: 380px) {
+  body.kiro-enhanced .kiro-home-header {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: calc(3.9rem + env(safe-area-inset-top, 0px)) !important;
+  }
+
+  body.kiro-enhanced .kiro-home-header > :first-child {
+    gap: 0.65rem !important;
+  }
+
+  body.kiro-enhanced .kiro-home-header h1 {
+    font-size: 1.05rem !important;
+    line-height: 1.2 !important;
+  }
+
+  body.kiro-enhanced .kiro-home-header p {
+    line-height: 1.25 !important;
+  }
+
+  body.kiro-enhanced .kiro-home-actions {
+    right: 0.75rem;
+    top: calc(0.65rem + env(safe-area-inset-top, 0px));
+  }
+
+  body.kiro-enhanced .kiro-home-actions a {
+    height: 2.25rem !important;
+    width: 2.25rem !important;
+  }
 }
 
 body.kiro-enhanced .kiro-status-good,
